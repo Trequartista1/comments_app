@@ -10,6 +10,10 @@ class Comment(models.Model):
         "self",
         on_delete=models.CASCADE,
         null=True,
-        blank=True
+        blank=True,
+        related_name='replies'
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.username}: {self.text[:30]}"
