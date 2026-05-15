@@ -1,0 +1,103 @@
+SELECT outer_table.order_id,
+	    outer_table.credit_id,
+	    outer_table.attempt_date AS "Дата попытки / Fecha del intento",
+	    outer_table.succes_status,
+	    outer_table.user_id,
+	    outer_table.overdue "День просрочки / Día de mora del crédito",
+	    outer_table.next_payment_id,
+       payment_after_fail_attempt.amount_ "Оплата после неуспешной попытки / Pago tras un intento fallido",
+	   ccd.total_debt AS "Общий долг / Deuda total",
+	   responsible_admin.admin_full_name AS "Ответственный / Responsable",
+       responsible_admin.department_name AS "Отдел / Departamento",
+	   CASE 
+        WHEN outer_table.raw_status = 1 THEN 'открыт / abierto'
+        WHEN outer_table.raw_status = 2 THEN 'закрыт / cerrado'
+        ELSE NULL 
+    END AS "Статус кредита / Estado del crédito" ,
+	   (SELECT COUNT(id) FROM calls WHERE calls.credit_id = outer_table.credit_id AND admin_id IS NOT NULL AND calls.created_at > attempt_date) AS "Попыток оплат / Intentos de pago" ,
+	   (SELECT COUNT(id) FROM calls WHERE calls.credit_id = outer_table.credit_id AND admin_id IS NOT NULL AND calls.created_at > attempt_date AND status = 2 AND real_duration >= 30) AS "Успешных попыток оплат / Pagos procesados con éxito",
+	   (SELECT name
+	   FROM user_tags
+	   JOIN tags ON tags.id = user_tags.tag_id AND tags.id = 149
+	   WHERE user_tags.user_id = outer_table.user_id
+	   AND user_tags.is_active = true
+	   ) AS tag_Intento_de_pago,
+
+	EXISTS(SELECT 1 FROM credit_prolongations WHERE credit_id = outer_table.credit_id) AS has_prolongation,
+    EXISTS(SELECT 1 FROM credit_restructurings WHERE credit_id = outer_table.credit_id) AS has_restructuring,
+	
+	(SELECT COUNT(id) FROM calls WHERE calls.credit_id = outer_table.credit_id AND calls.created_at > outer_table.attempt_date AND calls.type = 2) AS calls_after_attempt
+	
+       
+FROM (
+		SELECT *,
+		       (SELECT MIN(integration_payment_system_payment_id) 
+			   FROM credit_payments 
+			    JOIN integration_payment_system_payments ON integration_payment_system_payments.id = credit_payments.integration_payment_system_payment_id AND integration_payment_system_payments.action != 4
+				WHERE credit_payments.credit_id = result_table.credit_id AND credit_payments.created_at > result_table.attempt_date) AS next_payment_id
+		FROM (
+				SELECT base_table.*,
+				       credits.user_id,
+					   credits.status AS raw_status,
+					   credits.last_credit_calculation_id,
+					   credits.brand_id,
+				       ROW_NUMBER() OVER(PARTITION BY order_id ORDER BY attempt_date ) AS num_,
+					   {{snippet: День просрочки}} AS overdue
+				FROM (
+						SELECT order_id,
+						       credit_id,
+							    processed_at AS attempt_date, 
+							   COUNT(CASE WHEN status = 2 THEN 1 END) AS succes_status
+							   -- COUNT(CASE WHEN action = 1 THEN 1 END) AS action_
+						
+						FROM integration_payment_system_payments 
+						-- LEFT JOIN credits ON integration_payment_system_payments.credit_id = credits.id
+						
+						WHERE 1=1
+						   [[AND  integration_payment_system_payments.created_at::DATE between {{DATE_from}} and {{Date_till}}]]
+						   AND integration_payment_system_payments.action != 4
+						  -- AND credit_id = 176
+						GROUP BY 1,2,3	
+					) AS base_table
+				JOIN credits ON credits.id  = base_table.credit_id
+				LEFT JOIN credit_calculations ON credits.last_credit_calculation_id = credit_calculations.id
+				WHERE 1=1
+				AND succes_status = 0
+			) AS result_table
+		WHERE num_ = 1
+		ORDER BY attempt_date DESC
+	) AS outer_table
+LEFT JOIN credit_calculations cc ON outer_table.last_credit_calculation_id = cc.id
+LEFT JOIN {{#11108-shablon-finansovogo-stanu-kredit}} AS ccd ON ccd.id = cc.credit_calculation_data_id
+
+LEFT JOIN LATERAL (
+    SELECT 
+        CONCAT_WS(' ', a.last_name, a.first_name, a.third_name) AS admin_full_name,
+        bd.name AS department_name
+    FROM credit_responsible_logs crl
+    JOIN admins a ON crl.admin_id = a.id
+    LEFT JOIN LATERAL (
+        SELECT bd_inner.name
+        FROM admin_departments ad
+        JOIN brand_departments bd_inner ON ad.brand_department_id = bd_inner.id
+        WHERE ad.admin_id = a.id 
+          AND bd_inner.brand_id = outer_table.brand_id
+        ORDER BY ad.created_at DESC
+        LIMIT 1
+    ) bd ON TRUE
+    WHERE crl.credit_id = outer_table.credit_id
+      AND crl.created_at <= outer_table.attempt_date
+    ORDER BY crl.created_at DESC
+    LIMIT 1
+) AS responsible_admin ON TRUE
+
+LEFT JOIN LATERAL ( 
+                    SELECT SUM(credit_payments.amount) AS amount_
+                     FROM credit_payments 
+					 JOIN integration_payment_system_payments ON integration_payment_system_payments.id = credit_payments.integration_payment_system_payment_id AND integration_payment_system_payments.action != 4
+					 WHERE credit_payments.integration_payment_system_payment_id = outer_table.next_payment_id
+                      
+					 
+					) AS payment_after_fail_attempt  ON true
+
+

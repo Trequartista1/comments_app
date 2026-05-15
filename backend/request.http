@@ -1,0 +1,26 @@
+POST http://127.0.0.1:8000/comments/
+
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+German123
+
+--WebAppBoundary
+Content-Disposition: form-data; name="email"
+
+test@test.com
+
+--WebAppBoundary
+Content-Disposition: form-data; name="text"
+
+File upload test
+
+--WebAppBoundary
+Content-Disposition: form-data; name="text_file"; filename="test.txt"
+Content-Type: text/plain
+
+< ./test.txt
+
+--WebAppBoundary--
