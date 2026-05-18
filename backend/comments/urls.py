@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import CommentListCreateView
+from .views import (
+    CommentListCreateView,
+    captcha_view
+)
 
 
 urlpatterns = [
@@ -7,5 +10,11 @@ urlpatterns = [
         'comments/',
         CommentListCreateView.as_view(),
         name='comments-list'
+    ),
+
+    path(
+        'captcha/',
+        captcha_view,
+        name='captcha'
     ),
 ]
