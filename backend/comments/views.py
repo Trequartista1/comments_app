@@ -10,6 +10,9 @@ from io import BytesIO
 from django.http import HttpResponse
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+import jwt
+from django.conf import settings
+import datetime
 
 # Create your views here.
 class CommentListCreateView(generics.ListCreateAPIView):
@@ -54,29 +57,22 @@ def captcha_view(request):
         )
     )
 
-    request.session['captcha_text'] = captcha_text
-
-    image = Image.new(
-        'RGB',
-        (150, 50),
-        color='white'
+    token = jwt.encode(
+        {
+            'captcha': captcha_text.lower(),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
+        },
+        settings.SECRET_KEY,
+        algorithm='HS256'
     )
 
+    image = Image.new('RGB', (150, 50), color='white')
     draw = ImageDraw.Draw(image)
-
-    draw.text(
-        (20, 10),
-        captcha_text,
-        fill='black'
-    )
-
+    draw.text((20, 10), captcha_text, fill='black')
     buffer = BytesIO()
-
     image.save(buffer, format='PNG')
-
     buffer.seek(0)
 
-    return HttpResponse(
-        buffer,
-        content_type='image/png'
-    )
+    response = HttpResponse(buffer, content_type='image/png')
+    response['X-Captcha-Token'] = token
+    return response

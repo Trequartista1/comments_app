@@ -15,10 +15,12 @@ const captcha = ref('')
 const image = ref(null)
 const textFile = ref(null)
 const captchaUrl = ref('')
+const captchaToken = ref('')
 const textArea = ref(null)
 
 async function loadCaptcha() {
   const response = await fetch('https://commentsapp-production-4919.up.railway.app/captcha/', { credentials: 'include' })
+  captchaToken.value = response.headers.get('X-Captcha-Token')
   const blob = await response.blob()
   captchaUrl.value = URL.createObjectURL(blob)
 }
@@ -75,6 +77,7 @@ async function submitComment() {
   formData.append('homepage', homepage.value)
   formData.append('text', text.value)
   formData.append('captcha', captcha.value)
+  formData.append('captcha_token', captchaToken.value)
   if (image.value) formData.append('image', image.value)
   if (textFile.value) formData.append('text_file', textFile.value)
   if (props.parentId) formData.append('parent', props.parentId)

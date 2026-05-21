@@ -6,6 +6,8 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
 from bs4 import BeautifulSoup
+import jwt
+from django.conf import settings
 
 class CommentSerializer(serializers.ModelSerializer):
 
@@ -33,7 +35,6 @@ class CommentSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-
         username = data.get('username')
         homepage = data.get('homepage')
 
@@ -43,27 +44,20 @@ class CommentSerializer(serializers.ModelSerializer):
             )
 
         request = self.context.get('request')
+        captcha_token = request.data.get('captcha_token')
+        user_captcha = data.get('captcha', '').lower()
 
-        session_captcha = request.session.get('captcha_text')
+        if not captcha_token:
+            raise serializers.ValidationError("Captcha token not found.")
 
-        user_captcha = data.get('captcha')
-
-        if not session_captcha:
-            raise serializers.ValidationError(
-                "Captcha session not found."
-            )
-
-        if not user_captcha:
-            raise serializers.ValidationError(
-                "Captcha is required."
-            )
-
-        if session_captcha.lower() != user_captcha.lower():
-            raise serializers.ValidationError(
-                "Invalid captcha."
-            )
-
-        del request.session['captcha_text']
+        try:
+            payload = jwt.decode(captcha_token, settings.SECRET_KEY, algorithms=['HS256'])
+            if payload['captcha'] != user_captcha:
+                raise serializers.ValidationError("Invalid captcha.")
+        except jwt.ExpiredSignatureError:
+            raise serializers.ValidationError("Captcha expired.")
+        except jwt.InvalidTokenError:
+            raise serializers.ValidationError("Invalid captcha token.")
 
         return data
 
