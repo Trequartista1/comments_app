@@ -122,14 +122,7 @@ class CommentSerializer(serializers.ModelSerializer):
             img = Image.open(image)
 
             if img.format == 'GIF':
-                if img.width <= 320 and img.height <= 240:
-                    pass
-                else:
-                    img.thumbnail((320, 240))
-                    buffer = BytesIO()
-                    img.save(buffer, format='GIF')
-                    resized_image = ContentFile(buffer.getvalue(), name=image.name)
-                    validated_data['image'] = resized_image
+                pass
             else:
                 img.thumbnail((320, 240))
                 buffer = BytesIO()
