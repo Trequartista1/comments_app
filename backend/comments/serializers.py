@@ -114,7 +114,6 @@ class CommentSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-
         validated_data.pop('captcha', None)
 
         image = validated_data.get('image')
@@ -122,17 +121,20 @@ class CommentSerializer(serializers.ModelSerializer):
         if image:
             img = Image.open(image)
 
-            img.thumbnail((320, 240))
-
-            buffer = BytesIO()
-
-            img.save(buffer, format=img.format)
-
-            resized_image = ContentFile(
-                buffer.getvalue(),
-                name=image.name
-            )
-
-            validated_data['image'] = resized_image
+            if img.format == 'GIF':
+                if img.width <= 320 and img.height <= 240:
+                    pass
+                else:
+                    img.thumbnail((320, 240))
+                    buffer = BytesIO()
+                    img.save(buffer, format='GIF')
+                    resized_image = ContentFile(buffer.getvalue(), name=image.name)
+                    validated_data['image'] = resized_image
+            else:
+                img.thumbnail((320, 240))
+                buffer = BytesIO()
+                img.save(buffer, format=img.format)
+                resized_image = ContentFile(buffer.getvalue(), name=image.name)
+                validated_data['image'] = resized_image
 
         return Comment.objects.create(**validated_data)
