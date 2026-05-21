@@ -68,10 +68,27 @@ class CommentSerializer(serializers.ModelSerializer):
         allowed_tags = ['a', 'code', 'i', 'strong']
 
         for tag in soup.find_all():
-
             if tag.name not in allowed_tags:
                 raise serializers.ValidationError(
                     f'Tag <{tag.name}> is not allowed.'
+                )
+
+        open_tags = re.findall(r'<(a|code|i|strong)[^>]*>', value)
+        close_tags = re.findall(r'</(a|code|i|strong)>', value)
+
+        open_count = {}
+        close_count = {}
+
+        for tag in open_tags:
+            open_count[tag] = open_count.get(tag, 0) + 1
+
+        for tag in close_tags:
+            close_count[tag] = close_count.get(tag, 0) + 1
+
+        for tag in set(list(open_count.keys()) + list(close_count.keys())):
+            if open_count.get(tag, 0) != close_count.get(tag, 0):
+                raise serializers.ValidationError(
+                    f'Tag <{tag}> is not properly closed.'
                 )
 
         return value
