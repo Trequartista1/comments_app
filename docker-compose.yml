@@ -1,4 +1,13 @@
 services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: comments_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   backend:
     build: ./backend
     ports:
@@ -7,6 +16,13 @@ services:
       - ./backend:/app
     environment:
       - DEBUG=1
+      - DB_NAME=comments_db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
 
   frontend:
     build: ./frontend
@@ -20,3 +36,4 @@ services:
 
 volumes:
   frontend_node_modules:
+  postgres_data:
