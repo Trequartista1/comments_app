@@ -8,6 +8,8 @@ import string
 from PIL import Image, ImageDraw
 from io import BytesIO
 from django.http import HttpResponse
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 # Create your views here.
 class CommentListCreateView(generics.ListCreateAPIView):
@@ -28,6 +30,21 @@ class CommentListCreateView(generics.ListCreateAPIView):
         context['request'] = self.request
 
         return context
+
+    def perform_create(self, serializer):
+        comment = serializer.save()
+
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'comments',
+            {
+                'type': 'new_comment',
+                'data': CommentSerializer(
+                    comment,
+                    context={'request': self.request}
+                ).data
+            }
+        )
 
 def captcha_view(request):
     captcha_text = ''.join(
