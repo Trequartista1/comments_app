@@ -21,7 +21,6 @@ const textArea = ref(null)
 async function loadCaptcha() {
   const response = await fetch('https://commentsapp-production-4919.up.railway.app/captcha/', { credentials: 'include' })
   captchaToken.value = response.headers.get('X-Captcha-Token')
-  console.log('captcha token:', captchaToken.value)
   const blob = await response.blob()
   captchaUrl.value = URL.createObjectURL(blob)
 }
