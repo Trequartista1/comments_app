@@ -57,6 +57,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://perpetual-curiosity-production.up.railway.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
