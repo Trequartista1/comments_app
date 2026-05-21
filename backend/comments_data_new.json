@@ -1,0 +1,534 @@
+[
+{
+  "model": "comments.comment",
+  "pk": 1,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "First comment",
+    "created_at": "2026-05-13T15:35:04.946Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 2,
+  "fields": {
+    "username": "ReplyUser",
+    "email": "reply@test.com",
+    "homepage": "",
+    "text": "This is reply",
+    "created_at": "2026-05-13T16:03:01.009Z",
+    "image": "",
+    "text_file": "",
+    "parent": 1
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 3,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "POST API test",
+    "created_at": "2026-05-14T15:35:20.816Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 4,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "POST API test",
+    "created_at": "2026-05-14T15:39:52.390Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 5,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Nested API reply",
+    "created_at": "2026-05-14T15:47:18.842Z",
+    "image": "",
+    "text_file": "",
+    "parent": 1
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 6,
+  "fields": {
+    "username": "German123",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Valid email",
+    "created_at": "2026-05-15T15:11:02.363Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 7,
+  "fields": {
+    "username": "Герман",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "12345",
+    "created_at": "2026-05-15T15:13:59.375Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 8,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "<strong>Hello</strong>alert(1)",
+    "created_at": "2026-05-15T15:44:08.587Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 9,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "First file upload",
+    "created_at": "2026-05-15T17:05:57.839Z",
+    "image": "",
+    "text_file": "txt/test_django_file.txt",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 10,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "txt size test",
+    "created_at": "2026-05-15T17:26:34.177Z",
+    "image": "",
+    "text_file": "txt/2запрос.txt",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 11,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "image size validation",
+    "created_at": "2026-05-15T17:31:13.430Z",
+    "image": "images/unnamed.png",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 12,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Image resize test",
+    "created_at": "2026-05-18T14:25:18.005Z",
+    "image": "images/7f859152-d40d-4efc-ba1e-b93f261923f7.png",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 13,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Captcha check",
+    "created_at": "2026-05-18T16:14:51.337Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 14,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "extension test",
+    "created_at": "2026-05-18T17:08:21.262Z",
+    "image": "images/giphy.gif",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 15,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "First UI test",
+    "created_at": "2026-05-19T13:41:01.531Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 16,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Autoresponse test",
+    "created_at": "2026-05-19T14:15:27.047Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 17,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Reply UI test",
+    "created_at": "2026-05-19T14:47:45.767Z",
+    "image": "",
+    "text_file": "",
+    "parent": 16
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 18,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Nested reply UI check",
+    "created_at": "2026-05-19T14:52:43.650Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 19,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Nested reply UI CHECK(2)",
+    "created_at": "2026-05-19T14:53:45.631Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 20,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@GMAIL.COM",
+    "homepage": "",
+    "text": "Nested replies UI check",
+    "created_at": "2026-05-19T15:01:01.131Z",
+    "image": "",
+    "text_file": "",
+    "parent": 17
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 21,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:48:35.775Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 22,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:48:58.724Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 23,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:49:30.162Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 24,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:49:55.639Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 25,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:50:17.147Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 26,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:50:33.848Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 27,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:50:49.951Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 28,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:51:07.536Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 29,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:51:23.599Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 30,
+  "fields": {
+    "username": "admin",
+    "email": "test@gmail.com",
+    "homepage": "",
+    "text": "test",
+    "created_at": "2026-05-19T15:51:38.976Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 31,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "files UI test",
+    "created_at": "2026-05-19T15:58:20.232Z",
+    "image": "images/giphy_oggB8f6.gif",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 32,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "<strong>final reply</strong>",
+    "created_at": "2026-05-20T13:51:20.050Z",
+    "image": "",
+    "text_file": "",
+    "parent": 31
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 33,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Websocket test",
+    "created_at": "2026-05-20T14:33:34.093Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 34,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "websocket test 2",
+    "created_at": "2026-05-20T14:49:52.336Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 35,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "websocket test",
+    "created_at": "2026-05-21T13:03:56.002Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 36,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "Reply websocket test",
+    "created_at": "2026-05-21T13:04:57.751Z",
+    "image": "",
+    "text_file": "",
+    "parent": 35
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 37,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "websocket test",
+    "created_at": "2026-05-21T13:53:53.619Z",
+    "image": "",
+    "text_file": "",
+    "parent": null
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": 38,
+  "fields": {
+    "username": "admin",
+    "email": "da.german.rusanov@gmail.com",
+    "homepage": "",
+    "text": "reply websocket test",
+    "created_at": "2026-05-21T13:54:28.198Z",
+    "image": "",
+    "text_file": "",
+    "parent": 37
+  }
+}
+]
