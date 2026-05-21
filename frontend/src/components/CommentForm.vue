@@ -18,7 +18,7 @@ const captchaUrl = ref('')
 const textArea = ref(null)
 
 async function loadCaptcha() {
-  const response = await fetch('http://localhost:8000/captcha/', { credentials: 'include' })
+  const response = await fetch('https://commentsapp-production-4919.up.railway.app/captcha/', { credentials: 'include' })
   const blob = await response.blob()
   captchaUrl.value = URL.createObjectURL(blob)
 }
@@ -79,7 +79,7 @@ async function submitComment() {
   if (textFile.value) formData.append('text_file', textFile.value)
   if (props.parentId) formData.append('parent', props.parentId)
 
-  const response = await fetch('http://localhost:8000/comments/', {
+  const response = await fetch('https://commentsapp-production-4919.up.railway.app/comments/', {
     method: 'POST',
     body: formData,
     credentials: 'include'

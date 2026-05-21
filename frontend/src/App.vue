@@ -11,7 +11,7 @@ const replyTo = ref(null)
 
 async function fetchComments() {
   const response = await fetch(
-    `http://localhost:8000/comments/?page=${currentPage.value}&ordering=${ordering.value}`
+    `https://commentsapp-production-4919.up.railway.app/comments/?page=${currentPage.value}&ordering=${ordering.value}`
   )
   const data = await response.json()
   comments.value = data.results
@@ -21,7 +21,7 @@ async function fetchComments() {
 onMounted(() => {
   fetchComments()
 
-  const ws = new WebSocket('ws://localhost:8000/ws/comments/')
+  const ws = new WebSocket('wss://commentsapp-production-4919.up.railway.app/ws/comments/')
 
   ws.onmessage = (event) => {
     const newComment = JSON.parse(event.data)
