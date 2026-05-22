@@ -17,6 +17,18 @@ class CommentSerializer(serializers.ModelSerializer):
         write_only=True
     )
 
+    image = serializers.ImageField(
+        use_url=True,
+        required=False,
+        allow_null=True
+    )
+
+    text_file = serializers.FileField(
+        use_url=True,
+        required=False,
+        allow_null=True
+    )
+
     class Meta:
         model = Comment
         fields = '__all__'
