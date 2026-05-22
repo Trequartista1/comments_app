@@ -35,7 +35,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def get_replies(self, obj):
         replies = obj.replies.all()
-        serializer = CommentSerializer(replies, many=True)
+        serializer = CommentSerializer(
+            replies,
+            many=True,
+            context=self.context
+        )
         return serializer.data
 
     def validate_username(self, value):
