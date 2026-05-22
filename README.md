@@ -2,15 +2,18 @@
 
 A full-stack SPA for threaded commenting with real-time updates.
 
+**Live Demo:** https://perpetual-curiosity-production.up.railway.app
+
 ## Tech Stack
 
 **Backend**
 - Python 3.12 / Django 6.0
 - Django REST Framework
-- Django Channels + Daphne (WebSocket)
-- SQLite
+- Django Channels + Daphne (WebSocket / ASGI)
+- PostgreSQL
 - Pillow (image processing)
 - Bleach (XSS protection)
+- PyJWT (CAPTCHA token validation)
 
 **Frontend**
 - Vue 3 (Composition API)
@@ -18,6 +21,7 @@ A full-stack SPA for threaded commenting with real-time updates.
 
 **Infrastructure**
 - Docker + Docker Compose
+- Railway (hosting)
 
 ## Features
 
@@ -25,16 +29,18 @@ A full-stack SPA for threaded commenting with real-time updates.
 - Allowed HTML tags in text: `<strong>`, `<i>`, `<code>`, `<a>`
 - Toolbar buttons for quick tag insertion (B, i, code, link)
 - Live preview before submitting
-- CAPTCHA validation
+- CAPTCHA validation (JWT-based, works cross-domain)
 - Attach image (JPG, PNG, GIF — auto-resized to 320×240 if larger)
 - Attach text file (TXT, max 100KB)
+- Lightbox for image preview with animation
 - Threaded replies (unlimited nesting)
 - Top-level comments displayed as a sortable table
 - Sort by Username, E-mail, or Date (ascending / descending)
 - Pagination (25 comments per page)
 - Real-time updates via WebSocket — new comments appear instantly without page reload
 - XSS protection (Bleach sanitization on backend)
-- Client-side validation (required fields, email format, URL format, username format)
+- Client-side and server-side validation
+- HTML tag closure validation
 
 ## Project Structure
 
@@ -63,7 +69,8 @@ comments_app/
 │   │   └── style.css
 │   ├── Dockerfile
 │   └── package.json
-└── docker-compose.yml
+├── docker-compose.yml
+└── schema.sql
 ```
 
 ## Database Schema
@@ -86,7 +93,7 @@ comments_app/
 |--------|---------------|------------------------------------------|
 | GET    | /comments/    | List top-level comments (paginated)      |
 | POST   | /comments/    | Create a new comment                     |
-| GET    | /captcha/     | Get CAPTCHA image                        |
+| GET    | /captcha/     | Get CAPTCHA image + JWT token            |
 | WS     | /ws/comments/ | WebSocket for real-time comment updates  |
 
 ### Query Parameters for GET /comments/
@@ -105,7 +112,7 @@ comments_app/
 ### Run the project
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Trequartista1/comments_app.git
 cd comments_app
 docker compose build
 docker compose up
@@ -113,6 +120,14 @@ docker compose up
 
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8000
+
+### Apply migrations (first run)
+
+In a separate terminal:
+
+```bash
+docker compose exec backend python manage.py migrate
+```
 
 ### Stop the project
 
